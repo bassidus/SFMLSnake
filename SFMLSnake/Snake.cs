@@ -12,7 +12,7 @@ namespace SFMLSnake {
             Location = location;
             Direction = Directions.Up;
             Head = new Sprite(new Texture("images/red.png"));
-            Body = new Sprite(new Texture("images/green.png"));
+            Body = new Sprite(new Texture("images/dark_green.png"));
         }
 
         public void Update() {
