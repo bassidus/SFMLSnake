@@ -7,10 +7,10 @@ using System.Collections.Generic;
 namespace SFMLSnake {
 
     internal class Program {
-        private static readonly uint Width = 30, Height = 20;
+        public static readonly uint Width = 30, Height = 20;
         private static readonly uint grid = 16;
         private static int score = 0;
-        private static Directions direction;
+        //private static Directions direction;
         private static readonly Random random = new Random();
 
         private static void Main() {
@@ -31,7 +31,11 @@ namespace SFMLSnake {
                 float time = clock.ElapsedTime.AsSeconds();
                 clock.Restart();
                 timer += time;
-                ChangeDirection();
+
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Up)) { snake[0].ChangeDirection(Directions.Up); }
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Down)) { snake[0].ChangeDirection(Directions.Down); }
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Left)) { snake[0].ChangeDirection(Directions.Left); }
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Right)) { snake[0].ChangeDirection(Directions.Right); }
 
                 // exit check
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Q) || Keyboard.IsKeyPressed(Keyboard.Key.Escape)) {
@@ -74,66 +78,16 @@ namespace SFMLSnake {
             window.Display();
         }
 
-        private static void ChangeDirection() {
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Up) && direction != Directions.Down) {
-                direction = Directions.Up;
-            }
-
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Down) && direction != Directions.Up) {
-                direction = Directions.Down;
-            }
-
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Left) && direction != Directions.Right) {
-                direction = Directions.Left;
-            }
-
-            if (Keyboard.IsKeyPressed(Keyboard.Key.Right) && direction != Directions.Left) {
-                direction = Directions.Right;
-            }
-        }
-
         private static void Tick(ref Snake[] snake, ref Fruit fruit) {
             for (int i = score; i > 0; --i) {
                 snake[i].Location = snake[i - 1].Location;
             }
 
-            switch (direction) {
-                case Directions.Up:
-                    snake[0].Location -= new Location(0, 1);
-                    break;
-
-                case Directions.Down:
-                    snake[0].Location += new Location(0, 1);
-                    break;
-
-                case Directions.Left:
-                    snake[0].Location -= new Location(1, 0);
-                    break;
-
-                case Directions.Right:
-                    snake[0].Location += new Location(1, 0);
-                    break;
-
-                default:
-                    break;
-            }
+            snake[0].Update();
 
             if ((snake[0].Location == fruit.Location)) {
                 score++;
                 fruit.Location = new Location(random.Next() % Width, random.Next() % Height);
-            }
-
-            if (snake[0].Location.X > Width) {
-                snake[0].Location = new Location(0, snake[0].Location.Y);
-            }
-            if (snake[0].Location.X < 0) {
-                snake[0].Location = new Location(Width, snake[0].Location.Y);
-            }
-            if (snake[0].Location.Y > Height) {
-                snake[0].Location = new Location(snake[0].Location.X, 0);
-            }
-            if (snake[0].Location.Y < 0) {
-                snake[0].Location = new Location(snake[0].Location.X, Height);
             }
 
             for (int i = 1; i < score; i++) {
