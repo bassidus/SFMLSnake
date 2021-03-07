@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using System;
+using System.Collections.Generic;
 
 namespace SFMLSnake {
 
@@ -10,36 +11,25 @@ namespace SFMLSnake {
         private static readonly uint grid = 16;
         private static readonly uint horizontalBlock = grid * Width;
         private static readonly uint verticalBlock = grid * Height;
-        private static int score = 4;
+        private static int score = 0;
         private static Directions direction;
         private static readonly Random random = new Random();
 
         private static void Main() {
-            RenderWindow window = new RenderWindow(new VideoMode(horizontalBlock, verticalBlock), "Snake");
+            var timer = 0f;
+            var delay = 0.1f;
+            var window = new RenderWindow(new VideoMode(horizontalBlock, verticalBlock), "Snake");
+            var clock = new Clock();
+            var fruit = new Fruit(new Location(10, 10));
+            var block = new Grid(new Location(0, 0));
+            var snake = new Snake[100];
 
-            Texture textureBlock, textureHead, textureFruit, textureSnake;
-            textureBlock = new Texture("white.png");
-            textureFruit = new Texture("red.png");
-            textureHead = new Texture("red.png");
-            textureSnake = new Texture("green.png");
-
-            Sprite spriteBlock = new Sprite(textureBlock);
-            Sprite spriteFruit = new Sprite(textureFruit);
-            Sprite spriteSnake = new Sprite(textureSnake);
-            Sprite spriteHead = new Sprite(textureHead);
-
-            Clock clock = new Clock();
-            float timer = 0, delay = 0.1f;
-
-            Fruit fruit = new Fruit();
-            Snake[] snake = new Snake[100];
             for (int i = 0; i < snake.Length; i++) {
-                snake[i] = new Snake();
+                snake[i] = new Snake(new Location(20, 20));
             }
 
-            fruit.Location = new Location(10, 10);
-
             while (window.IsOpen) {
+                window.SetTitle($"SFML Snake by bassidus 2021 - Points: {score}");
                 float time = clock.ElapsedTime.AsSeconds();
                 clock.Restart();
                 timer += time;
@@ -55,33 +45,33 @@ namespace SFMLSnake {
                     Tick(ref snake, ref fruit);
                 }
 
-                Renderer(window, spriteBlock, spriteFruit, spriteSnake, spriteHead, fruit, snake);
+                Renderer(window, block, fruit, snake);
             }
         }
 
-        private static void Renderer(RenderWindow window, Sprite spriteBlock, Sprite spriteFruit, Sprite spriteSnake, Sprite spriteHead, Fruit fruit, Snake[] snake) {
+        private static void Renderer(RenderWindow window, Grid block, Fruit fruit, Snake[] snake) {
             window.Clear();
 
+            // draw grid
             for (int i = 0; i < Width; i++)
                 for (int j = 0; j < Height; j++) {
-                    spriteBlock.Position = new Vector2f(i * grid, j * grid);
-                    window.Draw(spriteBlock);
+                    block.Sprite.Position = new Vector2f(i * grid, j * grid);
+                    window.Draw(block.Sprite);
                 }
 
-            // draw snake
-            for (int i = 0; i < score; i++) {
-                if (i == 0) {
-                    spriteHead.Position = new Vector2f(snake[i].Location.X * grid, snake[i].Location.Y * grid);
-                    window.Draw(spriteHead);
-                } else {
-                    spriteSnake.Position = new Vector2f(snake[i].Location.X * grid, snake[i].Location.Y * grid);
-                    window.Draw(spriteSnake);
-                }
+            // draw snake head
+            snake[0].Head.Position = new Vector2f(snake[0].Location.X * grid, snake[0].Location.Y * grid);
+            window.Draw(snake[0].Head);
+
+            // draw tail
+            for (int i = 1; i <= score; i++) {
+                snake[i].Body.Position = new Vector2f(snake[i].Location.X * grid, snake[i].Location.Y * grid);
+                window.Draw(snake[i].Body);
             }
 
             // draw fruit
-            spriteFruit.Position = new Vector2f(fruit.Location.X * grid, fruit.Location.Y * grid);
-            window.Draw(spriteFruit);
+            fruit.Sprite.Position = new Vector2f(fruit.Location.X * grid, fruit.Location.Y * grid);
+            window.Draw(fruit.Sprite);
 
             window.Display();
         }
@@ -113,7 +103,7 @@ namespace SFMLSnake {
                 case Directions.Up:
                     snake[0].Location -= new Location(0, 1);
                     break;
-                
+
                 case Directions.Down:
                     snake[0].Location += new Location(0, 1);
                     break;
