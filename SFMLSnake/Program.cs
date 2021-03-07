@@ -91,7 +91,7 @@ namespace SFMLSnake {
             }
 
             for (int i = 1; i < score; i++) {
-                if (snake[0].Location.X == snake[i].Location.X && snake[0].Location.Y == snake[i].Location.Y) {
+                if (snake[0].Location == snake[i].Location) {
                     score = i;
                 }
             }
