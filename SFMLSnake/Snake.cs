@@ -11,8 +11,8 @@ namespace SFMLSnake {
         public Snake(Location location) {
             Location = location;
             Direction = Directions.Up;
-            Head = new Sprite(new Texture("red.png"));
-            Body = new Sprite(new Texture("green.png"));
+            Head = new Sprite(new Texture("images/red.png"));
+            Body = new Sprite(new Texture("images/green.png"));
         }
 
         public void Update() {

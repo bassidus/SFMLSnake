@@ -11,13 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="green.png">
+    <None Update="images\green.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="red.png">
+    <None Update="images\red.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="white.png">
+    <None Update="images\white.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
