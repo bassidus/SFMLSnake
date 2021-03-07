@@ -4,15 +4,18 @@ using SFML.Window;
 using System;
 using System.Collections.Generic;
 
-namespace SFMLSnake {
+namespace SFMLSnake
+{
 
-    internal class Program {
+    internal class Program
+    {
         public static readonly uint Width = 30, Height = 20;
         private static readonly uint grid = 16;
         private static int score = 0;
         private static readonly Random random = new Random();
 
-        private static void Main() {
+        private static void Main()
+        {
             var timer = 0f;
             var delay = 0.1f;
             var window = new RenderWindow(new VideoMode(grid * Width, grid * Height), "Snake");
@@ -21,11 +24,13 @@ namespace SFMLSnake {
             var block = new Grid(new Location(0, 0));
             var snake = new Snake[100];
 
-            for (int i = 0; i < snake.Length; i++) {
+            for (int i = 0; i < snake.Length; i++)
+            {
                 snake[i] = new Snake(new Location(20, 20));
             }
 
-            while (window.IsOpen) {
+            while (window.IsOpen)
+            {
                 window.SetTitle($"SFML Snake by bassidus 2021 - Score: {score}");
                 float time = clock.ElapsedTime.AsSeconds();
                 clock.Restart();
@@ -37,11 +42,13 @@ namespace SFMLSnake {
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Right)) { snake[0].ChangeDirection(Directions.Right); }
 
                 // exit check
-                if (Keyboard.IsKeyPressed(Keyboard.Key.Q) || Keyboard.IsKeyPressed(Keyboard.Key.Escape)) {
+                if (Keyboard.IsKeyPressed(Keyboard.Key.Q) || Keyboard.IsKeyPressed(Keyboard.Key.Escape))
+                {
                     window.Close();
                 }
 
-                if (timer > delay) {
+                if (timer > delay)
+                {
                     timer = 0;
                     Tick(ref snake, ref fruit);
                 }
@@ -50,12 +57,14 @@ namespace SFMLSnake {
             }
         }
 
-        private static void Renderer(RenderWindow window, Grid block, Fruit fruit, Snake[] snake) {
+        private static void Renderer(RenderWindow window, Grid block, Fruit fruit, Snake[] snake)
+        {
             window.Clear();
 
             // draw grid
             for (int i = 0; i < Width; i++)
-                for (int j = 0; j < Height; j++) {
+                for (int j = 0; j < Height; j++)
+                {
                     block.Sprite.Position = new Vector2f(i * grid, j * grid);
                     window.Draw(block.Sprite);
                 }
@@ -65,7 +74,8 @@ namespace SFMLSnake {
             window.Draw(snake[0].Head);
 
             // draw tail
-            for (int i = 1; i <= score; i++) {
+            for (int i = 1; i <= score; i++)
+            {
                 snake[i].Body.Position = new Vector2f(snake[i].Location.X * grid, snake[i].Location.Y * grid);
                 window.Draw(snake[i].Body);
             }
@@ -77,22 +87,27 @@ namespace SFMLSnake {
             window.Display();
         }
 
-        private static void Tick(ref Snake[] snake, ref Fruit fruit) {
-            for (int i = score; i > 0; --i) {
+        private static void Tick(ref Snake[] snake, ref Fruit fruit)
+        {
+            for (int i = score; i > 0; --i)
+            {
                 snake[i].Location = snake[i - 1].Location;
             }
 
             snake[0].Update();
 
             // food check
-            if ((snake[0].Location == fruit.Location)) {
+            if ((snake[0].Location == fruit.Location))
+            {
                 score++;
                 fruit.Location = new Location(random.Next() % Width, random.Next() % Height);
             }
 
             // tail collision
-            for (int i = 1; i < score; i++) {
-                if (snake[0].Location == snake[i].Location) {
+            for (int i = 1; i < score; i++)
+            {
+                if (snake[0].Location == snake[i].Location)
+                {
                     score = i;
                 }
             }

@@ -6,7 +6,7 @@ namespace SFMLSnake {
         public Sprite Sprite { get; }
         public Fruit(Location location) {
             Location = location;
-            Sprite = new Sprite(new Texture("red.png"));
+            Sprite = new Sprite(new Texture("images\\red.png"));
         }
     }
 }
