@@ -8,17 +8,16 @@ namespace SFMLSnake {
 
     internal class Program {
         public static readonly uint Width = 30, Height = 20;
-        private static readonly uint grid = 16;
+        private static readonly uint gridSize = 16;
         private static int score = 0;
-        private static readonly Random random = new Random();
 
         private static void Main() {
             var timer = 0f;
             var delay = 0.1f;
-            var window = new RenderWindow(new VideoMode(grid * Width, grid * Height), "Snake");
+            var window = new RenderWindow(new VideoMode(gridSize * Width, gridSize * Height), "Snake");
             var clock = new Clock();
             var fruit = new Fruit(new Location(10, 10));
-            var block = new Grid(new Location(0, 0));
+            var grid = new Grid(new Location(0, 0));
             var snake = new Snake[100];
 
             for (int i = 0; i < snake.Length; i++) {
@@ -46,32 +45,32 @@ namespace SFMLSnake {
                     Tick(ref snake, ref fruit);
                 }
 
-                Renderer(window, block, fruit, snake);
+                Renderer(window, grid, fruit, snake);
             }
         }
 
-        private static void Renderer(RenderWindow window, Grid block, Fruit fruit, Snake[] snake) {
+        private static void Renderer(RenderWindow window, Grid grid, Fruit fruit, Snake[] snake) {
             window.Clear();
 
             // draw grid
             for (int i = 0; i < Width; i++)
                 for (int j = 0; j < Height; j++) {
-                    block.Sprite.Position = new Vector2f(i * grid, j * grid);
-                    window.Draw(block.Sprite);
+                    grid.Sprite.Position = new Vector2f(i * gridSize, j * gridSize);
+                    window.Draw(grid.Sprite);
                 }
 
             // draw snake head
-            snake[0].Head.Position = new Vector2f(snake[0].Location.X * grid, snake[0].Location.Y * grid);
+            snake[0].Head.Position = new Vector2f(snake[0].Location.X * gridSize, snake[0].Location.Y * gridSize);
             window.Draw(snake[0].Head);
 
             // draw tail
             for (int i = 1; i <= score; i++) {
-                snake[i].Body.Position = new Vector2f(snake[i].Location.X * grid, snake[i].Location.Y * grid);
+                snake[i].Body.Position = new Vector2f(snake[i].Location.X * gridSize, snake[i].Location.Y * gridSize);
                 window.Draw(snake[i].Body);
             }
 
             // draw fruit
-            fruit.Sprite.Position = new Vector2f(fruit.Location.X * grid, fruit.Location.Y * grid);
+            fruit.Sprite.Position = new Vector2f(fruit.Location.X * gridSize, fruit.Location.Y * gridSize);
             window.Draw(fruit.Sprite);
 
             window.Display();
@@ -86,8 +85,9 @@ namespace SFMLSnake {
 
             // food check
             if ((snake[0].Location == fruit.Location)) {
+                var random = new Random();
+                fruit.Location = new Location(random.Next((int)Width), random.Next((int)Height));
                 score++;
-                fruit.Location = new Location(random.Next() % Width, random.Next() % Height);
             }
 
             // tail collision
