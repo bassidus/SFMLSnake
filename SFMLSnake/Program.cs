@@ -6,7 +6,6 @@ using System.Collections.Generic;
 
 namespace SFMLSnake
 {
-
     internal class Program
     {
         public static readonly uint Width = 30, Height = 20;

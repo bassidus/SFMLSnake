@@ -1,6 +1,7 @@
 ﻿using SFML.Graphics;
 
-namespace SFMLSnake {
+namespace SFMLSnake
+{
     struct Snake {
 
         public Location Location { get; set; }
