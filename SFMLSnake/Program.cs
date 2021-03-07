@@ -9,8 +9,6 @@ namespace SFMLSnake {
     internal class Program {
         private static readonly uint Width = 30, Height = 20;
         private static readonly uint grid = 16;
-        private static readonly uint horizontalBlock = grid * Width;
-        private static readonly uint verticalBlock = grid * Height;
         private static int score = 0;
         private static Directions direction;
         private static readonly Random random = new Random();
@@ -18,7 +16,7 @@ namespace SFMLSnake {
         private static void Main() {
             var timer = 0f;
             var delay = 0.1f;
-            var window = new RenderWindow(new VideoMode(horizontalBlock, verticalBlock), "Snake");
+            var window = new RenderWindow(new VideoMode(grid * Width, grid * Height), "Snake");
             var clock = new Clock();
             var fruit = new Fruit(new Location(10, 10));
             var block = new Grid(new Location(0, 0));
