@@ -10,7 +10,6 @@ namespace SFMLSnake {
         public static readonly uint Width = 30, Height = 20;
         private static readonly uint grid = 16;
         private static int score = 0;
-        //private static Directions direction;
         private static readonly Random random = new Random();
 
         private static void Main() {
@@ -27,7 +26,7 @@ namespace SFMLSnake {
             }
 
             while (window.IsOpen) {
-                window.SetTitle($"SFML Snake by bassidus 2021 - Points: {score}");
+                window.SetTitle($"SFML Snake by bassidus 2021 - Score: {score}");
                 float time = clock.ElapsedTime.AsSeconds();
                 clock.Restart();
                 timer += time;
@@ -85,11 +84,13 @@ namespace SFMLSnake {
 
             snake[0].Update();
 
+            // food check
             if ((snake[0].Location == fruit.Location)) {
                 score++;
                 fruit.Location = new Location(random.Next() % Width, random.Next() % Height);
             }
 
+            // tail collision
             for (int i = 1; i < score; i++) {
                 if (snake[0].Location == snake[i].Location) {
                     score = i;
