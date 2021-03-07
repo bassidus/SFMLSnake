@@ -1,12 +1,12 @@
 ﻿using SFML.Graphics;
 
 namespace SFMLSnake {
-    struct Fruit {
+    struct Grid {
         public Location Location { get; set; }
         public Sprite Sprite { get; }
-        public Fruit(Location location) {
+        public Grid(Location location) {
             Location = location;
-            Sprite = new Sprite(new Texture("red.png"));
+            Sprite = new Sprite(new Texture("white.png"));
         }
     }
 }
