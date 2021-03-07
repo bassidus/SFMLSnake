@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFMLSnake", "SFMLSnake\SFMLSnake.csproj", "{5ED5F567-5B8E-4AA2-940B-71768D0E3298}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5ED5F567-5B8E-4AA2-940B-71768D0E3298}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ED5F567-5B8E-4AA2-940B-71768D0E3298}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ED5F567-5B8E-4AA2-940B-71768D0E3298}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ED5F567-5B8E-4AA2-940B-71768D0E3298}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4ECB73BC-7B87-408C-B48D-8A3E92E58D2A}
+	EndGlobalSection
+EndGlobal
