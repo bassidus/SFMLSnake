@@ -44,10 +44,10 @@ namespace SFMLSnake
         {
             Position += Direction switch
             {
-                Directions.Up => new Position(0, -scale),
-                Directions.Down => new Position(0, scale),
-                Directions.Left => new Position(-scale, 0),
-                _ => new Position(scale, 0)
+                Directions.Up => new Position(0, -scale / 5),
+                Directions.Down => new Position(0, scale / 5),
+                Directions.Left => new Position(-scale / 5, 0),
+                _ => new Position(scale / 5, 0)
             };
         }
     }

@@ -3,9 +3,9 @@
 namespace SFMLSnake {
 
     public struct Position {
-        public readonly float X, Y;
+        public readonly int X, Y;
 
-        public Position(float x, float y) {
+        public Position(int x, int y) {
             X = x;
             Y = y;
         }

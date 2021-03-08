@@ -10,6 +10,7 @@ namespace SFMLSnake
         public int Width { get; }
         public int Height { get; }
         public int Scale { get; }
+        public int counter = 1;
         public GameWorld(int width, int height, int scale)
         {
             Scale = scale;
@@ -28,7 +29,7 @@ namespace SFMLSnake
         private void Clamp(GameObject gameObject)
         {
 
-            if (gameObject.Position.X > Width - 1)
+            if (gameObject.Position.X > Width - Scale)
             {
                 gameObject.SetPosition(new Position(0, gameObject.Position.Y));
             }
@@ -36,7 +37,7 @@ namespace SFMLSnake
             {
                 gameObject.SetPosition(new Position(Width - Scale, gameObject.Position.Y));
             }
-            if (gameObject.Position.Y > Height - 1)
+            if (gameObject.Position.Y > Height - Scale)
             {
                 gameObject.SetPosition(new Position(gameObject.Position.X, 0));
             }
@@ -66,7 +67,15 @@ namespace SFMLSnake
         {
             Snake snake = GameObjects.Find(o => o is Snake) as Snake;
             Fruit fruit = GameObjects.Find(o => o is Fruit) as Fruit;
-            Add(new Tail(snake.Position));
+            if (counter % 5 == 0)
+            {
+                counter = 1;
+                Add(new Tail(snake.Position));
+            }
+            else
+            {
+                counter++;
+            }
 
             foreach (var gameObject in GameObjects)
             {
@@ -79,7 +88,7 @@ namespace SFMLSnake
                 Clamp(gameObject);
             }
 
-            if (snake.Position == fruit.Position)
+            if (CheckCollision(snake.Position, fruit.Position))
             {
                 Score++;
                 GameObjects.Remove(fruit);
@@ -91,6 +100,14 @@ namespace SFMLSnake
             {
                 GameObjects.Remove(GameObjects.Find(o => o is Tail));
             }
+        }
+
+        private bool CheckCollision(Position p1, Position p2)
+        {
+            if (p1.X > p2.X - Scale / 5 && p1.X < p2.X + Scale / 5)
+                if (p1.Y > p2.Y - Scale / 5 && p1.Y < p2.Y + Scale / 5)
+                    return true;
+            return false;
         }
 
         private Directions AI(Snake snake, Fruit fruit)
