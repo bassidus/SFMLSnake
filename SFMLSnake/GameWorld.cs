@@ -1,13 +1,11 @@
-﻿using SFML.System;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace SFMLSnake
 {
     public class GameWorld
     {
-        public List<GameObject> GameObjects = new List<GameObject>();
+        public List<GameObject> GameObjects { get; };
         public int Score { get; private set; }
         public int Width { get; }
         public int Height { get; }
@@ -65,10 +63,9 @@ namespace SFMLSnake
             Fruit fruit = GameObjects.Find(o => o is Fruit) as Fruit;
             Add(new Tail(snake.Position));
 
-            foreach (var gameObject in GameObjects)
-            {
-                if (gameObject is Snake snake2)
-                {
+            foreach (var gameObject in GameObjects) {
+                if (gameObject is Snake) {
+                    (gameObject as Snake).KeyScanner();
                     (gameObject as Snake).ChangeDirection(AI(snake, fruit));
                 }
                 gameObject.Update();
@@ -111,9 +108,11 @@ namespace SFMLSnake
                 {
                     return Directions.Up;
                 }
-                else
-                {
-                    return Directions.Down;
+            } else {
+                if (snake.Location.Y > fruit.Location.Y) {
+                    return Direction.Up;
+                } else {
+                    return Direction.Down;
                 }
             }
             static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;

@@ -1,5 +1,5 @@
 ﻿using SFML.Graphics;
-using SFML.System;
+using SFML.Window;
 
 namespace SFMLSnake
 {
@@ -23,15 +23,28 @@ namespace SFMLSnake
             };
         }
 
-        public void ChangeDirection(Directions direction)
-        {
-            Direction = direction switch
-            {
-                Directions.Up => Direction == Directions.Down ? Direction : direction,
-                Directions.Down => Direction == Directions.Up ? Direction : direction,
-                Directions.Left => Direction == Directions.Right ? Direction : direction,
-                _ => Direction == Directions.Left ? Direction : direction,
+        public void ChangeDirection(Direction direction) {
+            Direction = direction switch {
+                Direction.Up => Direction == Direction.Down ? Direction : direction,
+                Direction.Down => Direction == Direction.Up ? Direction : direction,
+                Direction.Left => Direction == Direction.Right ? Direction : direction,
+                _ => Direction == Direction.Left ? Direction : direction,
             };
+        }
+
+        public void KeyScanner() {
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Up)) {
+                ChangeDirection(Direction.Up);
+            }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Down)) {
+                ChangeDirection(Direction.Down);
+            }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Left)) {
+                ChangeDirection(Direction.Left);
+            }
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Right)) {
+                ChangeDirection(Direction.Right);
+            }
         }
     }
 }

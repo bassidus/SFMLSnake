@@ -4,9 +4,9 @@ namespace SFMLSnake
 {
     public class Grid : GameObject
     {
-        public Grid(Position location) : base(location)
+        public Grid(Position position) : base(position)
         {
-            Position = location;
+            Position = position;
             Sprite = new Sprite(new Texture("images/white.png"));
         }
     }
