@@ -5,16 +5,18 @@ namespace SFMLSnake
 {
     public abstract class GameObject
     {
-        public Position Location;
+        public Position Position { get; protected set; }
         public Sprite Sprite { get; protected set; }
-        public GameObject(Position location)
+        public GameObject(Position position)
         {
-            Location = location;
+            Position = position;
+            Sprite = new Sprite(new Texture("images/white.png"));
         }
+
+        public void SetPosition(Position position) => Position = position;
 
         public virtual void Update()
         {
-
         }
     }
 }
