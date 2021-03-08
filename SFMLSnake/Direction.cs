@@ -1,4 +1,14 @@
 ﻿namespace SFMLSnake
 {
-    public enum Direction { Up, Down, Left, Right }
+    public enum Direction
+    {
+        Up,
+        UpRight,
+        Right,
+        DownRight,
+        Down,
+        DownLeft,
+        Left,
+        UpLeft
+    }
 }
