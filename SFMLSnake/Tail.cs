@@ -6,8 +6,7 @@ namespace SFMLSnake
     {
         public Tail(Position location) : base(location)
         {
-            Location = location;
-            Sprite = new Sprite(new Texture("images/dark_green.png"));
+            Sprite.Color = Color.Green;
         }
     }
 }

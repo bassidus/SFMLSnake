@@ -1,59 +1,69 @@
 ﻿using SFML.System;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace SFMLSnake
 {
     public class GameWorld
     {
+        public List<GameObject> GameObjects = new List<GameObject>();
         public int Score { get; private set; }
         public int Width { get; }
         public int Height { get; }
-        public List<GameObject> GameObjects { get; }
         public GameWorld(int width, int height)
         {
             Width = width;
             Height = height;
-            GameObjects = new List<GameObject>();
-            Score = 100;
-            AddFruitAtRandomLocation();
+            Score = 0;
+            Add(new Fruit(RandomPosition()));
         }
 
+        public T Add<T>(T gameObject) where T : GameObject
+        {
+            GameObjects.Add(gameObject);
+            return gameObject;
+        }
         private void Clamp(GameObject gameObject)
         {
 
-            if (gameObject.Location.X > Width - 1)
+            if (gameObject.Position.X > Width - 1)
             {
-                gameObject.Location = new Position(0, gameObject.Location.Y);
+                gameObject.SetPosition(new Position(0, gameObject.Position.Y));
             }
-            if (gameObject.Location.X < 0)
+            if (gameObject.Position.X < 0)
             {
-                gameObject.Location = new Position(Width - 1, gameObject.Location.Y);
+                gameObject.SetPosition(new Position(Width - 1, gameObject.Position.Y));
             }
-            if (gameObject.Location.Y > Height - 1)
+            if (gameObject.Position.Y > Height - 1)
             {
-                gameObject.Location = new Position(gameObject.Location.X, 0);
+                gameObject.SetPosition(new Position(gameObject.Position.X, 0));
             }
-            if (gameObject.Location.Y < 0)
+            if (gameObject.Position.Y < 0)
             {
-                gameObject.Location = new Position(gameObject.Location.X, Height - 1);
+                gameObject.SetPosition(new Position(gameObject.Position.X, Height - 1));
             }
         }
 
-        private void AddFruitAtRandomLocation()
+        public Position RandomPosition()
         {
             var random = new Random();
-            var x = random.Next(Width);
-            var y = random.Next(Height);
-            var position = new Position(x, y);
-            var fruit = new Fruit(position);
-            GameObjects.Add(fruit);
+            var position = new Position(random.Next(Width), random.Next(Height));
+            foreach (var gameObject in GameObjects)
+            {
+                if (position == gameObject.Position)
+                {
+                    position = RandomPosition();
+                }
+            }
+            return position;
         }
+
         public void Update()
         {
             Snake snake = GameObjects.Find(o => o is Snake) as Snake;
             Fruit fruit = GameObjects.Find(o => o is Fruit) as Fruit;
-            GameObjects.Add(new Tail(snake.Location));
+            Add(new Tail(snake.Position));
 
             foreach (var gameObject in GameObjects)
             {
@@ -65,28 +75,27 @@ namespace SFMLSnake
                 Clamp(gameObject);
             }
 
-            if (snake.Location == fruit.Location)
+            if (snake.Position == fruit.Position)
             {
                 Score++;
                 GameObjects.Remove(fruit);
-                AddFruitAtRandomLocation();
+                Add(new Fruit(RandomPosition()));
             }
 
             var tailCount = GameObjects.FindAll(o => o is Tail).Count;
             if (tailCount > Score)
             {
-                var tail = GameObjects.Find(o => o is Tail);
-                GameObjects.Remove(tail);
+                GameObjects.Remove(GameObjects.Find(o => o is Tail));
             }
         }
 
         private Directions AI(Snake snake, Fruit fruit)
         {
-            var xDifference = Difference(snake.Location.X, fruit.Location.X);
-            var yDifference = Difference(snake.Location.Y, fruit.Location.Y);
+            var xDifference = Difference(snake.Position.X, fruit.Position.X);
+            var yDifference = Difference(snake.Position.Y, fruit.Position.Y);
             if (xDifference > yDifference)
             {
-                if (snake.Location.X > fruit.Location.X)
+                if (snake.Position.X > fruit.Position.X)
                 {
                     return Directions.Left;
                 }
@@ -98,7 +107,7 @@ namespace SFMLSnake
             }
             else
             {
-                if (snake.Location.Y > fruit.Location.Y)
+                if (snake.Position.Y > fruit.Position.Y)
                 {
                     return Directions.Up;
                 }

@@ -6,7 +6,7 @@ namespace SFMLSnake
     {
         public Grid(Position location) : base(location)
         {
-            Location = location;
+            Position = location;
             Sprite = new Sprite(new Texture("images/white.png"));
         }
     }

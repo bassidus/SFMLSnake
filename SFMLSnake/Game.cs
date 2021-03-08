@@ -9,10 +9,9 @@ namespace SFMLSnake {
             var world = new GameWorld(30, 20);
             var window = new Window(world, 16);
             var clock = new Clock();
-
-            var snake = new Snake(new Position(20, 20));
-            world.GameObjects.Add(snake);
-
+            var snake = world.Add(new Snake(world.RandomPosition()));
+            
+            
             while (window.IsOpen) {
                 window.SetTitle($"SFML Snake by Bassidus and Han 2021 - Score: {world.Score}");
                 float time = clock.ElapsedTime.AsSeconds();

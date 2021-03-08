@@ -6,15 +6,15 @@ namespace SFMLSnake
     public class Snake : GameObject
     {
         public Directions Direction { get; private set; }
-        public Snake(Position location):base(location)
+        public Snake(Position position):base(position)
         {
             Direction = Directions.Up;
-            Sprite = new Sprite(new Texture("images/red.png"));
+            Sprite.Color = Color.Green; // green
         }
 
         public override void Update()
         {
-            Location += Direction switch
+            Position += Direction switch
             {
                 Directions.Up => new Position(0, -1),
                 Directions.Down => new Position(0, 1),
