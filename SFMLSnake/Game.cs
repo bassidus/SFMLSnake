@@ -16,9 +16,8 @@ namespace SFMLSnake {
             
             while (window.IsOpen) {
                 window.SetTitle($"SFML Snake by Bassidus and Han 2021 - Score: {world.Score}");
-                float time = clock.ElapsedTime.AsSeconds();
+                timer += clock.ElapsedTime.AsSeconds();
                 clock.Restart();
-                timer += time;
 
                 // exit check
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Q) ||
