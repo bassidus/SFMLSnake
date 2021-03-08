@@ -110,7 +110,7 @@ namespace SFMLSnake
             return false;
         }
 
-        private Directions AI(Snake snake, Fruit fruit)
+        private Direction AI(Snake snake, Fruit fruit)
         {
             var xDifference = Difference(snake.Position.X, fruit.Position.X);
             var yDifference = Difference(snake.Position.Y, fruit.Position.Y);
@@ -118,11 +118,11 @@ namespace SFMLSnake
             {
                 if (snake.Position.X > fruit.Position.X)
                 {
-                    return Directions.Left;
+                    return Direction.Left;
                 }
                 else
                 {
-                    return Directions.Right;
+                    return Direction.Right;
                 }
 
             }
@@ -130,11 +130,11 @@ namespace SFMLSnake
             {
                 if (snake.Position.Y > fruit.Position.Y)
                 {
-                    return Directions.Up;
+                    return Direction.Up;
                 }
                 else
                 {
-                    return Directions.Down;
+                    return Direction.Down;
                 }
             }
             static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;
