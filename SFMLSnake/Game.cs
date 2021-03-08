@@ -10,8 +10,8 @@ namespace SFMLSnake
         public void RunGame()
         {
             var timer = 0f;
-            var delay = 0.02f;
-            var world = new GameWorld(30, 20, 16);
+            var delay = 0.1f;
+            var world = new GameWorld(30, 20, 16, 5);
             var window = new Window(world);
             var clock = new Clock();
             var snake = world.Add(new Snake(world.RandomPosition()));
@@ -30,7 +30,7 @@ namespace SFMLSnake
                     window.Close();
                 }
 
-                if (timer > delay)
+                if (timer > delay / world.FrameRate)
                 {
                     timer = 0;
                     world.Update();

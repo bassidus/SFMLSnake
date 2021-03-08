@@ -5,19 +5,22 @@ namespace SFMLSnake
 {
     public class GameWorld
     {
+        private int Counter { get; set; }
+        public int FrameRate { get; }
         public List<GameObject> GameObjects { get; }
-        public int Score { get; private set; }
-        public int Width { get; }
         public int Height { get; }
         public int Scale { get; }
-        public int counter = 1;
-        public GameWorld(int width, int height, int scale)
+        public int Score { get; private set; }
+        public int Width { get; }
+        public GameWorld(int width, int height, int scale, int frameRate)
         {
-            Scale = scale;
-            Width = width * scale;
-            Height = height * scale;
-            Score = 0;
+            Counter = 1;
+            FrameRate = frameRate;
             GameObjects = new List<GameObject>();
+            Score = 0;
+            Scale = scale;
+            Height = height * scale;
+            Width = width * scale;
             Add(new Fruit(RandomPosition()));
         }
 
@@ -67,14 +70,14 @@ namespace SFMLSnake
         {
             Snake snake = GameObjects.Find(o => o is Snake) as Snake;
             Fruit fruit = GameObjects.Find(o => o is Fruit) as Fruit;
-            if (counter % 5 == 0)
+            if (Counter % FrameRate == 0)
             {
-                counter = 1;
+                Counter = 1;
                 Add(new Tail(snake.Position));
             }
             else
             {
-                counter++;
+                Counter++;
             }
 
             foreach (var gameObject in GameObjects)
@@ -82,7 +85,7 @@ namespace SFMLSnake
                 if (gameObject is Snake)
                 {
                     (gameObject as Snake).KeyScanner();
-                    (gameObject as Snake).ChangeDirection(AI(snake, fruit));
+                    //(gameObject as Snake).ChangeDirection(AI(snake, fruit));
                 }
                 gameObject.Update(Scale);
                 Clamp(gameObject);
@@ -104,8 +107,8 @@ namespace SFMLSnake
 
         private bool CheckCollision(Position p1, Position p2)
         {
-            if (p1.X > p2.X - Scale / 5 && p1.X < p2.X + Scale / 5)
-                if (p1.Y > p2.Y - Scale / 5 && p1.Y < p2.Y + Scale / 5)
+            if (p1.X + Scale > p2.X && p1.X < p2.X + Scale)
+                if (p1.Y + Scale > p2.Y && p1.Y < p2.Y + Scale)
                     return true;
             return false;
         }
