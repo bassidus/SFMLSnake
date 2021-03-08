@@ -15,7 +15,7 @@ namespace SFMLSnake
             Width = width;
             Height = height;
             GameObjects = new List<GameObject>();
-            Score = 0;
+            Score = 100;
             AddFruitAtRandomLocation();
         }
 
@@ -42,8 +42,12 @@ namespace SFMLSnake
 
         private void AddFruitAtRandomLocation()
         {
-            var location = new Position(new Random().Next(Width), new Random().Next(Height));
-            GameObjects.Add(new Fruit(location));
+            var random = new Random();
+            var x = random.Next(Width);
+            var y = random.Next(Height);
+            var position = new Position(x, y);
+            var fruit = new Fruit(position);
+            GameObjects.Add(fruit);
         }
         public void Update()
         {
@@ -53,6 +57,10 @@ namespace SFMLSnake
 
             foreach (var gameObject in GameObjects)
             {
+                if (gameObject is Snake snake2)
+                {
+                    (gameObject as Snake).ChangeDirection(AI(snake, fruit));
+                }
                 gameObject.Update();
                 Clamp(gameObject);
             }
@@ -67,9 +75,39 @@ namespace SFMLSnake
             var tailCount = GameObjects.FindAll(o => o is Tail).Count;
             if (tailCount > Score)
             {
-                var tail = GameObjects.Find(o=>o is Tail);
+                var tail = GameObjects.Find(o => o is Tail);
                 GameObjects.Remove(tail);
             }
+        }
+
+        private Directions AI(Snake snake, Fruit fruit)
+        {
+            var xDifference = Difference(snake.Location.X, fruit.Location.X);
+            var yDifference = Difference(snake.Location.Y, fruit.Location.Y);
+            if (xDifference > yDifference)
+            {
+                if (snake.Location.X > fruit.Location.X)
+                {
+                    return Directions.Left;
+                }
+                else
+                {
+                    return Directions.Right;
+                }
+
+            }
+            else
+            {
+                if (snake.Location.Y > fruit.Location.Y)
+                {
+                    return Directions.Up;
+                }
+                else
+                {
+                    return Directions.Down;
+                }
+            }
+            static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;
         }
     }
 }
