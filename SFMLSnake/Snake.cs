@@ -1,88 +1,37 @@
 ﻿using SFML.Graphics;
+using SFML.System;
 
-namespace SFMLSnake {
-    struct Snake {
-
-        public Location Location { get; set; }
+namespace SFMLSnake
+{
+    public class Snake : GameObject
+    {
         public Directions Direction { get; private set; }
-
-        public Sprite Head { get; }
-        public Sprite Body { get; }
-        public Snake(Location location) {
-            Location = location;
+        public Snake(Location location):base(location)
+        {
             Direction = Directions.Up;
-            Head = new Sprite(new Texture("images/red.png"));
-            Body = new Sprite(new Texture("images/green.png"));
+            Sprite = new Sprite(new Texture("images/red.png"));
         }
 
-        public void Update() {
-            Move();
-            OtherSide();
+        public override void Update()
+        {
+            Location += Direction switch
+            {
+                Directions.Up => new Location(0, -1),
+                Directions.Down => new Location(0, 1),
+                Directions.Left => new Location(-1, 0),
+                _ => new Location(1, 0)
+            };
         }
 
-        private void Move() {
-            switch (Direction) {
-                case Directions.Up:
-                    Location -= new Location(0, 1);
-                    break;
-
-                case Directions.Down:
-                    Location += new Location(0, 1);
-                    break;
-
-                case Directions.Left:
-                    Location -= new Location(1, 0);
-                    break;
-
-                default:
-                    Location += new Location(1, 0);
-                    break;
-            }
+        public void ChangeDirection(Directions direction)
+        {
+            Direction = direction switch
+            {
+                Directions.Up => Direction == Directions.Down ? Direction : direction,
+                Directions.Down => Direction == Directions.Up ? Direction : direction,
+                Directions.Left => Direction == Directions.Right ? Direction : direction,
+                _ => Direction == Directions.Left ? Direction : direction,
+            };
         }
-
-        private void OtherSide() {
-            if (Location.X > Program.Width) {
-                Location = new Location(0, Location.Y);
-            }
-            if (Location.X < 0) {
-                Location = new Location(Program.Width, Location.Y);
-            }
-            if (Location.Y > Program.Height) {
-                Location = new Location(Location.X, 0);
-            }
-            if (Location.Y < 0) {
-                Location = new Location(Location.X, Program.Height);
-            }
-        }
-
-        public void ChangeDirection(Directions direction) {
-            switch (direction) {
-                case Directions.Up:
-                    if (Direction != Directions.Down) {
-                        Direction = Directions.Up;
-                    }
-                    break;
-                case Directions.Down:
-                    if (Direction != Directions.Up) {
-                        Direction = Directions.Down;
-                    }
-                    break;
-                case Directions.Left:
-                    if (Direction != Directions.Right) {
-                        Direction = Directions.Left;
-                    }
-                    break;
-                case Directions.Right:
-                    if (Direction != Directions.Left) {
-                        Direction = Directions.Right;
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-
-        }
-
     }
 }

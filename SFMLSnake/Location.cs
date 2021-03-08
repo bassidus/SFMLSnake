@@ -1,8 +1,8 @@
 ﻿using System;
 
 namespace SFMLSnake {
-    struct Location {
-        public float X, Y;
+    public struct Location {
+        public readonly float X, Y;
         public Location(float x, float y) {
             X = x;
             Y = y;
