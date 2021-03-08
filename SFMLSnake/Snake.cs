@@ -23,27 +23,27 @@ namespace SFMLSnake
             };
         }
 
-        public void ChangeDirection(Direction direction) {
+        public void ChangeDirection(Directions direction) {
             Direction = direction switch {
-                Direction.Up => Direction == Direction.Down ? Direction : direction,
-                Direction.Down => Direction == Direction.Up ? Direction : direction,
-                Direction.Left => Direction == Direction.Right ? Direction : direction,
-                _ => Direction == Direction.Left ? Direction : direction,
+                Directions.Up => Direction == Directions.Down ? Direction : direction,
+                Directions.Down => Direction == Directions.Up ? Direction : direction,
+                Directions.Left => Direction == Directions.Right ? Direction : direction,
+                _ => Direction == Directions.Left ? Direction : direction,
             };
         }
 
         public void KeyScanner() {
             if (Keyboard.IsKeyPressed(Keyboard.Key.Up)) {
-                ChangeDirection(Direction.Up);
+                ChangeDirection(Directions.Up);
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Down)) {
-                ChangeDirection(Direction.Down);
+                ChangeDirection(Directions.Down);
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Left)) {
-                ChangeDirection(Direction.Left);
+                ChangeDirection(Directions.Left);
             }
             if (Keyboard.IsKeyPressed(Keyboard.Key.Right)) {
-                ChangeDirection(Direction.Right);
+                ChangeDirection(Directions.Right);
             }
         }
     }

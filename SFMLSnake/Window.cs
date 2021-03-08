@@ -40,7 +40,7 @@ namespace SFMLSnake {
 
         private void DrawObjects() {
             foreach (var gameObject in World.GameObjects) {
-                gameObject.Sprite.Position = new Vector2f(gameObject.Location.X, gameObject.Location.Y) * Scale;
+                gameObject.Sprite.Position = new Vector2f(gameObject.Position.X, gameObject.Position.Y) * Scale;
                 RenderWindow.Draw(gameObject.Sprite);
             }
         }
