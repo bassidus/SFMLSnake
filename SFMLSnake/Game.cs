@@ -8,8 +8,8 @@ namespace SFMLSnake {
         public void RunGame() {
             var timer = 0f;
             var delay = 0.1f;
-            var world = new GameWorld(30, 20);
-            var window = new Window(world, 16);
+            var world = new GameWorld(30, 20, 16);
+            var window = new Window(world);
             var clock = new Clock();
             var snake = world.Add(new Snake(world.RandomPosition()));
             
@@ -28,8 +28,8 @@ namespace SFMLSnake {
                 if (timer > delay) {
                     timer = 0;
                     world.Update();
-                    window.Render();
                 }
+                    window.Render();
             }
         }
     }

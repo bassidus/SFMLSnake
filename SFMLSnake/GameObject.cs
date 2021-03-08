@@ -14,7 +14,7 @@ namespace SFMLSnake
 
         public void SetPosition(Position position) => Position = position;
 
-        public virtual void Update()
+        public virtual void Update(int scale)
         {
         }
     }

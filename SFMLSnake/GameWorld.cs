@@ -9,10 +9,12 @@ namespace SFMLSnake
         public int Score { get; private set; }
         public int Width { get; }
         public int Height { get; }
-        public GameWorld(int width, int height)
+        public int Scale { get; }
+        public GameWorld(int width, int height, int scale)
         {
-            Width = width;
-            Height = height;
+            Scale = scale;
+            Width = width * scale;
+            Height = height * scale;
             Score = 0;
             GameObjects = new List<GameObject>();
             Add(new Fruit(RandomPosition()));
@@ -47,7 +49,7 @@ namespace SFMLSnake
         public Position RandomPosition()
         {
             var random = new Random();
-            var position = new Position(random.Next(Width), random.Next(Height));
+            var position = new Position(random.Next(Width / Scale) * Scale, random.Next(Height / Scale) * Scale);
             foreach (var gameObject in GameObjects)
             {
                 if (position == gameObject.Position)
@@ -71,7 +73,7 @@ namespace SFMLSnake
                     (gameObject as Snake).KeyScanner();
                     (gameObject as Snake).ChangeDirection(AI(snake, fruit));
                 }
-                gameObject.Update();
+                gameObject.Update(Scale);
                 Clamp(gameObject);
             }
 
@@ -116,7 +118,7 @@ namespace SFMLSnake
                     return Directions.Down;
                 }
             }
-                static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;
-            }
+            static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;
         }
     }
+}
