@@ -24,25 +24,25 @@ namespace SFMLSnake
 
             if (gameObject.Location.X > Width - 1)
             {
-                gameObject.Location = new Location(0, gameObject.Location.Y);
+                gameObject.Location = new Position(0, gameObject.Location.Y);
             }
             if (gameObject.Location.X < 0)
             {
-                gameObject.Location = new Location(Width - 1, gameObject.Location.Y);
+                gameObject.Location = new Position(Width - 1, gameObject.Location.Y);
             }
             if (gameObject.Location.Y > Height - 1)
             {
-                gameObject.Location = new Location(gameObject.Location.X, 0);
+                gameObject.Location = new Position(gameObject.Location.X, 0);
             }
             if (gameObject.Location.Y < 0)
             {
-                gameObject.Location = new Location(gameObject.Location.X, Height - 1);
+                gameObject.Location = new Position(gameObject.Location.X, Height - 1);
             }
         }
 
         private void AddFruitAtRandomLocation()
         {
-            var location = new Location(new Random().Next(Width), new Random().Next(Height));
+            var location = new Position(new Random().Next(Width), new Random().Next(Height));
             GameObjects.Add(new Fruit(location));
         }
         public void Update()

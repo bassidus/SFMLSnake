@@ -4,10 +4,10 @@ namespace SFMLSnake
 {
     public class Tail : GameObject
     {
-        public Tail(Location location) : base(location)
+        public Tail(Position location) : base(location)
         {
             Location = location;
-            Sprite = new Sprite(new Texture("images/green.png"));
+            Sprite = new Sprite(new Texture("images/dark_green.png"));
         }
     }
 }

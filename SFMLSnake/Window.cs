@@ -22,7 +22,7 @@ namespace SFMLSnake
 
         public void Render()
         {
-            var grid = new Grid(new Location(0, 0));
+            var grid = new Grid(new Position(0, 0));
             RenderWindow.Clear();
 
             // draw grid

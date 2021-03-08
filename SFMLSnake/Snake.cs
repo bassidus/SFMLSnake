@@ -6,7 +6,7 @@ namespace SFMLSnake
     public class Snake : GameObject
     {
         public Directions Direction { get; private set; }
-        public Snake(Location location):base(location)
+        public Snake(Position location):base(location)
         {
             Direction = Directions.Up;
             Sprite = new Sprite(new Texture("images/red.png"));
@@ -16,10 +16,10 @@ namespace SFMLSnake
         {
             Location += Direction switch
             {
-                Directions.Up => new Location(0, -1),
-                Directions.Down => new Location(0, 1),
-                Directions.Left => new Location(-1, 0),
-                _ => new Location(1, 0)
+                Directions.Up => new Position(0, -1),
+                Directions.Down => new Position(0, 1),
+                Directions.Left => new Position(-1, 0),
+                _ => new Position(1, 0)
             };
         }
 
