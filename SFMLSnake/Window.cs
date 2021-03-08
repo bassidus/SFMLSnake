@@ -10,6 +10,7 @@ namespace SFMLSnake
         public RenderWindow RenderWindow { get; }
         public int Scale { get; }
         public GameWorld World { get; }
+        Grid grid = new Grid(new Position(0, 0));
         public Window(GameWorld world, int scale)
         {
             Scale = scale;
@@ -20,27 +21,27 @@ namespace SFMLSnake
 
         public void Close() => RenderWindow.Close();
 
-        public void Render()
-        {
-            var grid = new Grid(new Position(0, 0));
+        public void Render() {
             RenderWindow.Clear();
-
-            // draw grid
-            for (int i = 0; i < World.Width; i++)
-                for (int j = 0; j < World.Height; j++)
-                {
-                    grid.Sprite.Position = new Vector2f(i, j) * Scale;
-                    RenderWindow.Draw(grid.Sprite);
-                }
-
-            // draw snake head
-            foreach (var gameObject in World.GameObjects)
-            {
-                gameObject.Sprite.Position = new Vector2f(gameObject.Location.X, gameObject.Location.Y) * Scale;
-                RenderWindow.Draw(gameObject.Sprite);
-            }
+            DrawGrid();
+            DrawObjects();
             RenderWindow.Display();
         }
 
+        private void DrawGrid() {
+            for (int i = 0; i < World.Width; i++) {
+                for (int j = 0; j < World.Height; j++) {
+                    grid.Sprite.Position = new Vector2f(i, j) * Scale;
+                    RenderWindow.Draw(grid.Sprite);
+                }
+            }
+        }
+
+        private void DrawObjects() {
+            foreach (var gameObject in World.GameObjects) {
+                gameObject.Sprite.Position = new Vector2f(gameObject.Location.X, gameObject.Location.Y) * Scale;
+                RenderWindow.Draw(gameObject.Sprite);
+            }
+        }
     }
 }
