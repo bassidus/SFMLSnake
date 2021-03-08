@@ -26,7 +26,7 @@ namespace SFMLSnake
 
         public void Render()
         {
-            RenderWindow.Clear();
+            RenderWindow.Clear(new Color(25, 25, 25));
             DrawGrid();
             DrawObjects();
             RenderWindow.Display();
@@ -38,8 +38,15 @@ namespace SFMLSnake
             {
                 for (int j = 0; j < World.Height; j += World.Scale)
                 {
-                    Grid.Sprite.Position = new Vector2f(i, j);
-                    RenderWindow.Draw(Grid.Sprite);
+                    //Grid.Sprite.Position = new Vector2f(i, j);
+                    //RenderWindow.Draw(Grid.Sprite);
+                    if (new Random().Next(100) < 1)
+                    {
+                        var circle = new CircleShape(1);
+                        circle.Position = new Vector2f(i, j);
+                        RenderWindow.Draw(circle);
+                    }
+
                 }
             }
         }
@@ -48,8 +55,8 @@ namespace SFMLSnake
         {
             foreach (var gameObject in World.GameObjects)
             {
-                gameObject.Sprite.Position = new Vector2f(gameObject.Position.X, gameObject.Position.Y);
-                RenderWindow.Draw(gameObject.Sprite);
+                gameObject.Circle.Position = new Vector2f(gameObject.Position.X, gameObject.Position.Y);
+                RenderWindow.Draw(gameObject.Circle);
             }
         }
     }
