@@ -32,21 +32,21 @@ namespace SFMLSnake
         private void Clamp(GameObject gameObject)
         {
 
-            if (gameObject.Position.X > Width - Scale)
+            if (gameObject.Position.X > Width)
             {
                 gameObject.SetPosition(new Position(0, gameObject.Position.Y));
             }
             if (gameObject.Position.X < 0)
             {
-                gameObject.SetPosition(new Position(Width - Scale, gameObject.Position.Y));
+                gameObject.SetPosition(new Position(Width - Scale / FrameRate, gameObject.Position.Y));
             }
-            if (gameObject.Position.Y > Height - Scale)
+            if (gameObject.Position.Y > Height)
             {
                 gameObject.SetPosition(new Position(gameObject.Position.X, 0));
             }
             if (gameObject.Position.Y < 0)
             {
-                gameObject.SetPosition(new Position(gameObject.Position.X, Height - Scale));
+                gameObject.SetPosition(new Position(gameObject.Position.X, Height - Scale / FrameRate));
             }
         }
 
@@ -72,13 +72,10 @@ namespace SFMLSnake
             Fruit fruit = GameObjects.Find(o => o is Fruit) as Fruit;
             if (Counter % FrameRate == 0)
             {
-                Counter = 1;
+                Counter = 0;
                 Add(new Tail(snake.Position));
             }
-            else
-            {
-                Counter++;
-            }
+            Counter++;
 
             foreach (var gameObject in GameObjects)
             {
@@ -87,7 +84,7 @@ namespace SFMLSnake
                     (gameObject as Snake).KeyScanner();
                     //(gameObject as Snake).ChangeDirection(AI(snake, fruit));
                 }
-                gameObject.Update(Scale);
+                gameObject.Update(Scale/FrameRate);
                 Clamp(gameObject);
             }
 
