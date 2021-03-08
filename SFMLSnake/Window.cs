@@ -24,6 +24,8 @@ namespace SFMLSnake
 
         public void Close() => RenderWindow.Close();
 
+        public void DispatchEvents() => RenderWindow.DispatchEvents();
+
         public void Render()
         {
             RenderWindow.Clear(new Color(25, 25, 25));

@@ -15,7 +15,7 @@ namespace SFMLSnake
             var window = new Window(world);
             var clock = new Clock();
             var snake = world.Add(new Snake(world.RandomPosition()));
-
+            
 
             while (window.IsOpen)
             {
@@ -23,7 +23,8 @@ namespace SFMLSnake
                 timer += clock.ElapsedTime.AsSeconds();
                 clock.Restart();
 
-                // exit check
+                window.DispatchEvents();
+                    // exit check
                 if (Keyboard.IsKeyPressed(Keyboard.Key.Q) ||
                     Keyboard.IsKeyPressed(Keyboard.Key.Escape))
                 {
