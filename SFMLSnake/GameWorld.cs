@@ -34,7 +34,7 @@ namespace SFMLSnake
             }
             if (gameObject.Position.X < 0)
             {
-                gameObject.SetPosition(new Position(Width - 1, gameObject.Position.Y));
+                gameObject.SetPosition(new Position(Width - Scale, gameObject.Position.Y));
             }
             if (gameObject.Position.Y > Height - 1)
             {
@@ -42,14 +42,16 @@ namespace SFMLSnake
             }
             if (gameObject.Position.Y < 0)
             {
-                gameObject.SetPosition(new Position(gameObject.Position.X, Height - 1));
+                gameObject.SetPosition(new Position(gameObject.Position.X, Height - Scale));
             }
         }
 
         public Position RandomPosition()
         {
             var random = new Random();
-            var position = new Position(random.Next(Width / Scale) * Scale, random.Next(Height / Scale) * Scale);
+            var x = random.Next(Width / Scale) * Scale;
+            var y = random.Next(Height / Scale) * Scale;
+            var position = new Position(x, y);
             foreach (var gameObject in GameObjects)
             {
                 if (position == gameObject.Position)

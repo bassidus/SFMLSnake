@@ -1,6 +1,7 @@
 ﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
+using System;
 
 namespace SFMLSnake
 {
@@ -15,7 +16,7 @@ namespace SFMLSnake
         public Window(GameWorld world)
         {
             World = world;
-            RenderWindow = new RenderWindow(new VideoMode((uint)World.Width, (uint)World.Height), "Snake");
+            RenderWindow = new RenderWindow(new VideoMode((uint)world.Width, (uint)world.Height), "Snake");
             Grid = new Grid(new Position(0, 0));
         }
 
