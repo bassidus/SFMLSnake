@@ -10,12 +10,13 @@ namespace SFMLSnake
         public RenderWindow RenderWindow { get; }
         public int Scale { get; }
         public GameWorld World { get; }
-        Grid grid = new Grid(new Position(0, 0));
+        private Grid Grid { get; }
         public Window(GameWorld world, int scale)
         {
             Scale = scale;
             World = world;
             RenderWindow = new RenderWindow(new VideoMode((uint)(Scale * World.Width), (uint)(Scale * World.Height)), "Snake");
+            Grid = new Grid(new Position(0, 0));
         }
         public void SetTitle(string text) => RenderWindow.SetTitle(text);
 
@@ -31,8 +32,8 @@ namespace SFMLSnake
         private void DrawGrid() {
             for (int i = 0; i < World.Width; i++) {
                 for (int j = 0; j < World.Height; j++) {
-                    grid.Sprite.Position = new Vector2f(i, j) * Scale;
-                    RenderWindow.Draw(grid.Sprite);
+                    Grid.Sprite.Position = new Vector2f(i, j) * Scale;
+                    RenderWindow.Draw(Grid.Sprite);
                 }
             }
         }
