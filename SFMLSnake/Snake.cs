@@ -18,14 +18,14 @@ namespace SFMLSnake
         {
             Direction = direction switch
             {
-                Direction.Up => Direction == Direction.Down ? Direction : direction,
-                Direction.UpRight => Direction == Direction.DownLeft ? Direction : direction,
-                Direction.Right => Direction == Direction.Left ? Direction : direction,
-                Direction.DownRight => Direction == Direction.UpLeft ? Direction : direction,
-                Direction.Down => Direction == Direction.Up ? Direction : direction,
-                Direction.DownLeft => Direction == Direction.UpRight ? Direction : direction,
-                Direction.Left => Direction == Direction.Right ? Direction : direction,
-                _ => Direction == Direction.DownRight ? Direction : direction,
+                Direction.Up => Direction == Direction.Down ? Direction.DownLeft : direction,
+                Direction.UpRight => Direction == Direction.DownLeft ? Direction.Left : direction,
+                Direction.Right => Direction == Direction.Left ? Direction.UpLeft : direction,
+                Direction.DownRight => Direction == Direction.UpLeft ? Direction.Up : direction,
+                Direction.Down => Direction == Direction.Up ? Direction.UpRight : direction,
+                Direction.DownLeft => Direction == Direction.UpRight ? Direction.Right : direction,
+                Direction.Left => Direction == Direction.Right ? Direction.DownRight : direction,
+                _ => Direction == Direction.DownRight ? Direction.Down : direction,
             };
         }
         public void KeyScanner()
