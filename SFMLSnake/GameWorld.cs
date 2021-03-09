@@ -26,7 +26,7 @@ namespace SFMLSnake
 
         public T Add<T>(T gameObject) where T : GameObject
         {
-            GameObjects.Add(gameObject);
+            GameObjects.Insert(0, gameObject);
             return gameObject;
         }
         private void Clamp(GameObject gameObject)
@@ -82,9 +82,9 @@ namespace SFMLSnake
                 if (gameObject is Snake)
                 {
                     (gameObject as Snake).KeyScanner();
-                    //(gameObject as Snake).ChangeDirection(AI(snake, fruit));
+                    (gameObject as Snake).ChangeDirection(AI(snake, fruit));
                 }
-                gameObject.Update(Scale/FrameRate);
+                gameObject.Update(Scale / FrameRate);
                 Clamp(gameObject);
             }
 
@@ -98,7 +98,8 @@ namespace SFMLSnake
             var tailCount = GameObjects.FindAll(o => o is Tail).Count;
             if (tailCount > Score)
             {
-                GameObjects.Remove(GameObjects.Find(o => o is Tail));
+                var tail = GameObjects.FindAll(o => o is Tail)[^1];
+                GameObjects.Remove(tail);
             }
         }
 

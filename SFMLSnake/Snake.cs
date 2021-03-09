@@ -10,6 +10,9 @@ namespace SFMLSnake
         {
             Direction = Direction.Up;
             Sprite.Color = Color.Green; // green
+            Circle.FillColor = new Color(100, 255, 10, 200);
+            Circle.OutlineColor = new Color(200, 200, 200, 200);
+            Circle.OutlineThickness = -3;
         }
         public void ChangeDirection(Direction direction)
         {

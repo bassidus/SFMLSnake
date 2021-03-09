@@ -2,6 +2,7 @@
 using SFML.System;
 using SFML.Window;
 using System;
+using System.Collections;
 
 namespace SFMLSnake
 {
@@ -48,7 +49,6 @@ namespace SFMLSnake
                         circle.Position = new Vector2f(i, j);
                         RenderWindow.Draw(circle);
                     }
-
                 }
             }
         }
