@@ -113,31 +113,78 @@ namespace SFMLSnake
 
         private Direction AI(Snake snake, Fruit fruit)
         {
-            var xDifference = Difference(snake.Position.X, fruit.Position.X);
-            var yDifference = Difference(snake.Position.Y, fruit.Position.Y);
+            var xDifference = Difference(fruit.Position.X, snake.Position.X);
+            var yDifference = Difference(fruit.Position.Y, snake.Position.Y);
+            var x = fruit.Position.X - snake.Position.X;
+            var y = fruit.Position.Y - snake.Position.Y;
+
             if (xDifference > yDifference)
             {
-                if (snake.Position.X > fruit.Position.X)
+                if (x > 0)
                 {
-                    return Direction.Left;
+                    if (y < 0)
+                        return Direction.UpRight;
+                    else if (y > Scale)
+                        return Direction.DownRight;
+                    else
+                        return Direction.Right;
                 }
                 else
                 {
-                    return Direction.Right;
+                    if (y > 0)
+                        return Direction.UpLeft;
+                    else if (y < Scale)
+                        return Direction.DownLeft;
+                    else
+                        return Direction.Left;
                 }
-
             }
             else
             {
-                if (snake.Position.Y > fruit.Position.Y)
+                if (y < 0)
                 {
-                    return Direction.Up;
+                    if (x > Scale)
+                        return Direction.UpRight;
+                    else if (x < 0)
+                        return Direction.UpLeft;
+                    else
+                        return Direction.Up;
                 }
                 else
                 {
-                    return Direction.Down;
+                    if (x > Scale)
+                        return Direction.DownRight;
+                    else if (x < 0)
+                        return Direction.DownLeft;
+                    else
+                        return Direction.Down;
                 }
             }
+
+
+            //if (xDifference > yDifference)
+            //{
+            //    if (snake.Position.X > fruit.Position.X)
+            //    {
+            //        return Direction.Left;
+            //    }
+            //    else
+            //    {
+            //        return Direction.Right;
+            //    }
+
+            //}
+            //else
+            //{
+            //    if (snake.Position.Y > fruit.Position.Y)
+            //    {
+            //        return Direction.Up;
+            //    }
+            //    else
+            //    {
+            //        return Direction.Down;
+            //    }
+            //}
             static float Difference(float x1, float x2) => x1 > x2 ? x1 - x2 : x2 - x1;
         }
     }
